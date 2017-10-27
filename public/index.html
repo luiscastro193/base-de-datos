@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="es">
+	<head>
+		<meta charset="utf-8">
+		<title>Base de datos</title>
+		<meta name="author" content="Luis Castro Martín">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="google-signin-client_id" content="yourgoogleid">
+		<link rel="stylesheet" type="text/css" href="styles.css">
+		<script src="https://apis.google.com/js/platform.js" async defer></script>
+		<script src="api.js"></script>
+	</head>
+
+	<body>
+		<div class="g-signin2" data-onsuccess="loadUser" data-prompt="select_account"></div>
+		<main></main>
+		<script>
+			"use strict";
+			function clearUser() {
+				gapi.auth2.getAuthInstance().signOut();
+				document.querySelector('main').innerHTML = '';
+			}
+			
+			function loadUser() {
+				let main = document.querySelector('main');
+				main.innerHTML = '';
+				
+				get("/username", true).then(username => {
+					main.innerHTML = `<p>Bienvenido,</p>
+					<p>${username}</p>
+					<a href="javascript:void(0)" onclick="clearUser()">Sign out</a>`;
+				}).catch(errorHandler);
+			}
+		</script>
+	</body>
+</html>

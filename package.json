@@ -1,0 +1,25 @@
+{
+	"name": "base-de-datos",
+	"version": "1.0.0",
+	"description": "Prototipo de una base de datos",
+	"engines": {
+		"node": "7.x",
+		"npm": "5.x"
+	},
+	"main": "index.js",
+	"scripts": {
+		"start": "node index.js"
+	},
+	"dependencies": {
+		"express": "*",
+		"pg": "*",
+		"google-auth-library": "*",
+		"body-parser": "*"
+	},
+	"keywords": [
+		"node",
+		"heroku",
+		"express",
+		"database"
+	]
+}

@@ -1,0 +1,5 @@
+{
+  "name": "Base de datos",
+  "description": "Prototipo de una base de datos",
+  "keywords": ["node", "heroku", "express", "database"]
+}
