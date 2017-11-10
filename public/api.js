@@ -66,6 +66,7 @@ function request(method, component, data, withCredentials = false) {
 				
 				return gapiPromise.then(() => {
 					gapiPromise = null;
+					// loadUser();
 					resolve(request(method, component, data, withCredentials));
 				}).catch(() => {
 					gapiPromise = null;
@@ -93,6 +94,7 @@ function request(method, component, data, withCredentials = false) {
 				
 						gapiPromise.then(() => {
 							gapiPromise = null;
+							// loadUser();
 							resolve(request(method, component, data, withCredentials));
 						}).catch(() => {
 							gapiPromise = null;
