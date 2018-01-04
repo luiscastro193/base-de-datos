@@ -16,6 +16,9 @@
 		<main></main>
 		<script>
 			"use strict";
+			if (location.protocol != 'https:')
+				location = 'https:' + location.href.substring(location.protocol.length);
+			
 			function clearUser() {
 				gapi.auth2.getAuthInstance().signOut();
 				document.querySelector('main').innerHTML = '';
