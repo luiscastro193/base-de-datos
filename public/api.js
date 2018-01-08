@@ -16,7 +16,7 @@ function signIn() {
 		var auth2 = window.gapi && gapi.auth2 && gapi.auth2.getAuthInstance();
 			
 		if (!auth2)
-			return pause(1000).then(() => resolve(signIn()));
+			return pause(1500).then(() => resolve(signIn()));
 		
 		if (auth2.isSignedIn.get())
 			resolve();
