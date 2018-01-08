@@ -27,6 +27,13 @@ function getUserid(request, response, next) {
 		response.status(401).json({error: "Credentials required"});
 }
 
+function tryUserid(request, response, next) {
+	if (request.headers.authorization)
+		getUserid(request, response, next);
+	else
+		next();
+}
+
 app.set('port', process.env.PORT || 5000);
 
 app.use(express.static(__dirname + '/public'));
