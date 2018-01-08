@@ -6,6 +6,11 @@ function pause(ms) {
 	return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+function isSignedIn() {
+	let auth2 = window.gapi && gapi.auth2 && gapi.auth2.getAuthInstance();
+	return auth2 && auth2.isSignedIn.get();
+}
+
 function errorHandler(error) {
 	alert("Error: " + error.statusText + "\n\n" + error.errorMsg);
 }
@@ -83,6 +88,7 @@ function request(method, component, data, withCredentials = false) {
 				
 						registerPromise.then(() => {
 							registerPromise = null;
+							// loadUser();
 							resolve(request(method, component, data, withCredentials));
 						}).catch(() => {
 							registerPromise = null;
