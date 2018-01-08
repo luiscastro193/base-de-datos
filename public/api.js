@@ -7,7 +7,7 @@ function pause(ms) {
 }
 
 function isSignedIn() {
-	let auth2 = window.gapi && gapi.auth2 && gapi.auth2.getAuthInstance();
+	var auth2 = window.gapi && gapi.auth2 && gapi.auth2.getAuthInstance();
 	return auth2 && auth2.isSignedIn.get();
 }
 
