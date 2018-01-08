@@ -66,7 +66,7 @@ function request(method, component, data, withCredentials = false) {
 			
 			if (auth2.isSignedIn.get())
 				xhr.setRequestHeader('Authorization', 'Bearer ' + auth2.currentUser.get().getAuthResponse().id_token);
-			else{
+			else {
 				if (!gapiPromise) gapiPromise = auth2.signIn({prompt: 'select_account'});
 				
 				return gapiPromise.then(() => {
