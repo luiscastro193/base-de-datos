@@ -8,11 +8,35 @@ function pause(ms) {
 
 function isSignedIn() {
 	var auth2 = window.gapi && gapi.auth2 && gapi.auth2.getAuthInstance();
-	return auth2 && auth2.isSignedIn.get();
+	return auth2 && auth2.isSignedIn.get() && auth2;
+}
+
+function signIn() {
+	return new Promise((resolve, reject) => {
+		var auth2 = window.gapi && gapi.auth2 && gapi.auth2.getAuthInstance();
+			
+		if (!auth2)
+			return pause(1000).then(() => resolve(signIn()));
+		
+		if (auth2.isSignedIn.get())
+			resolve();
+		else {
+			if (!gapiPromise) gapiPromise = auth2.signIn();
+			
+			gapiPromise.then(() => {
+				gapiPromise = null;
+				//loadUser();
+				resolve();
+			}).catch(() => {
+				gapiPromise = null;
+				reject();
+			});
+		}
+	});
 }
 
 function errorHandler(error) {
-	alert("Error: " + error.statusText + "\n\n" + error.errorMsg);
+	if (error.statusText) alert("Error: " + error.statusText + "\n\n" + error.errorMsg);
 }
 
 function newRegisterPromise() {
@@ -59,22 +83,14 @@ function request(method, component, data, withCredentials = false) {
 		if (method == "POST") xhr.setRequestHeader("Content-type", "application/json");
 		
 		if (withCredentials) {
-			var auth2 = window.gapi && gapi.auth2 && gapi.auth2.getAuthInstance();
+			var auth2;
 			
-			if (!auth2)
-				return pause(500).then(() => resolve(request(method, component, data, withCredentials)));
-			
-			if (auth2.isSignedIn.get())
+			if (auth2 = isSignedIn())
 				xhr.setRequestHeader('Authorization', 'Bearer ' + auth2.currentUser.get().getAuthResponse().id_token);
 			else {
-				if (!gapiPromise) gapiPromise = auth2.signIn({prompt: 'select_account'});
-				
-				return gapiPromise.then(() => {
-					gapiPromise = null;
-					// loadUser();
+				return signIn().then(() => {
 					resolve(request(method, component, data, withCredentials));
 				}).catch(() => {
-					gapiPromise = null;
 					reject({statusText: "Unauthorized", errorMsg: "Sign in required"});
 				});
 			}
@@ -88,7 +104,7 @@ function request(method, component, data, withCredentials = false) {
 				
 						registerPromise.then(() => {
 							registerPromise = null;
-							// loadUser();
+							//loadUser();
 							resolve(request(method, component, data, withCredentials));
 						}).catch(() => {
 							registerPromise = null;
@@ -96,14 +112,9 @@ function request(method, component, data, withCredentials = false) {
 						});
 					}
 					else if (xhr.response.error == "Invalid token") {
-						if (!gapiPromise) gapiPromise = auth2.signIn({prompt: 'select_account'});
-				
-						gapiPromise.then(() => {
-							gapiPromise = null;
-							// loadUser();
+						signIn().then(() => {
 							resolve(request(method, component, data, withCredentials));
 						}).catch(() => {
-							gapiPromise = null;
 							reject({statusText: "Unauthorized", errorMsg: "Sign in required"});
 						});
 					}
