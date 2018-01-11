@@ -41,7 +41,7 @@ app.use(bodyParser.json());
 
 app.post('/register', getUserid, function(request, response) {
 	if (request.body.username) {
-		pool.query('insert into users(userid, username) values($1, $2)', [request.userid, request.body.username]).then(result => {
+		pool.query('insert into users(userid, username) values($1, $2)', [request.userid, request.body.username.trim()]).then(result => {
 			response.json();
 		}).catch(error => {
 			let errorMsg = error.stack.split(/[\r\n]+/)[0];
