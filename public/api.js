@@ -18,20 +18,22 @@ function signIn() {
 		if (!auth2)
 			return pause(1500).then(() => resolve(signIn()));
 		
-		if (auth2.isSignedIn.get())
-			resolve();
-		else {
-			if (!gapiPromise) gapiPromise = auth2.signIn();
-			
-			gapiPromise.then(() => {
-				gapiPromise = null;
-				//loadUser();
+		auth2.then(() => {
+			if (auth2.isSignedIn.get())
 				resolve();
-			}).catch(() => {
-				gapiPromise = null;
-				reject();
-			});
-		}
+			else {
+				if (!gapiPromise) gapiPromise = auth2.signIn();
+			
+				gapiPromise.then(() => {
+					gapiPromise = null;
+					//loadUser();
+					resolve();
+				}).catch(() => {
+					gapiPromise = null;
+					reject();
+				});
+			}
+		});
 	});
 }
 
