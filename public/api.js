@@ -38,7 +38,7 @@ function signIn() {
 }
 
 function errorHandler(error) {
-	if (error.statusText) alert("Error: " + error.statusText + "\n\n" + error.errorMsg);
+	if (error.statusText || error.errorMsg) alert("Error: " + error.statusText + "\n\n" + error.errorMsg);
 }
 
 function newRegisterPromise() {
