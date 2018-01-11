@@ -33,7 +33,7 @@ function signIn() {
 					reject();
 				});
 			}
-		});
+		}).catch(() => reject());
 	});
 }
 
