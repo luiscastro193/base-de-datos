@@ -39,6 +39,7 @@ function signIn() {
 
 function errorHandler(error) {
 	if (error.statusText || error.errorMsg) alert("Error: " + error.statusText + "\n\n" + error.errorMsg);
+	else console.error(error);
 }
 
 function newRegisterPromise() {
