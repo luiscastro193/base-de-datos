@@ -1,9 +1,9 @@
 "use strict";
 const express = require('express');
 const app = express();
-const GoogleAuth = require('google-auth-library');
+const {OAuth2Client} = require('google-auth-library');
 const googleId = "yourgoogleid";
-const auth = new (new GoogleAuth).OAuth2(googleId, "yourgooglesecret");
+const auth = new OAuth2Client(googleId);
 const { Pool } = require('pg');
 const bodyParser = require('body-parser');
 
@@ -14,7 +14,7 @@ const pool = new Pool({
 
 function getUserid(request, response, next) {
 	if (request.headers.authorization) {
-		auth.verifyIdToken(request.headers.authorization.split(' ')[1] || "null", googleId, function(error, login) {
+		auth.verifyIdToken({idToken: request.headers.authorization.split(' ')[1] || "null", audience: googleId}, function(error, login) {
 			if (login) {
 				request.userid = login.getPayload()['sub'];
 				next();
