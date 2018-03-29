@@ -36,7 +36,7 @@ function tryUserid(request, response, next) {
 
 app.set('port', process.env.PORT || 5000);
 
-app.use(express.static(__dirname + '/public', {maxAge: '5m', immutable: true}));
+app.use(express.static(__dirname + '/public', {maxAge: '30m', immutable: true}));
 app.use(bodyParser.json());
 
 app.post('/register', getUserid, function(request, response) {
