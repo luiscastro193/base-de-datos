@@ -3,8 +3,8 @@
 	"version": "1.0.0",
 	"description": "Prototipo de una base de datos",
 	"engines": {
-		"node": "8.x",
-		"npm": "5.x"
+		"node": "10.x",
+		"npm": "6.x"
 	},
 	"main": "index.js",
 	"scripts": {
