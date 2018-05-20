@@ -11,10 +11,10 @@
 		"start": "node index.js"
 	},
 	"dependencies": {
+		"body-parser": "*",
 		"express": "*",
-		"pg": "*",
 		"google-auth-library": "*",
-		"body-parser": "*"
+		"pg": "*"
 	},
 	"keywords": [
 		"node",
