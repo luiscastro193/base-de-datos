@@ -29,7 +29,7 @@
 				main.innerHTML = '';
 				
 				get("/username", true).then(username => {
-					main.innerHTML = `<p>Bienvenido,</p>
+					main.innerHTML = `<p>Bienvenido/a,</p>
 					<p>${username}</p>
 					<a href="javascript:void(0)" onclick="clearUser()">Sign out</a>`;
 				}).catch(errorHandler);
