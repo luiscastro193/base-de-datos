@@ -12,6 +12,7 @@
 	},
 	"dependencies": {
 		"body-parser": "*",
+		"dotenv": "*",
 		"express": "*",
 		"google-auth-library": "*",
 		"pg": "*"
